@@ -24,7 +24,42 @@
 #ifndef DRM_FOURCC_H
 #define DRM_FOURCC_H
 
+/**
+ * DRM_BASIC_TYPES_DEFINED section exists in both drm.h and drm_fourcc.h files.
+ * Do not modify the section in one file without updating the other!
+ */
+
+#ifndef DRM_BASIC_TYPES_DEFINED
+#define DRM_BASIC_TYPES_DEFINED
+
+#if defined(__KERNEL__)
+
+#include <linux/types.h>
+
+#elif defined(__linux__)
+
+#include <linux/types.h>
+
+#else /* Not Linux */
+
+#include <stdint.h>
+typedef int8_t   __s8;
+typedef uint8_t  __u8;
+typedef int16_t  __s16;
+typedef uint16_t __u16;
+typedef int32_t  __s32;
+typedef uint32_t __u32;
+typedef int64_t  __s64;
+typedef uint64_t __u64;
+typedef size_t   __kernel_size_t;
+
+#endif
+
+#endif /* DRM_BASIC_TYPES_DEFINED */
+
+#ifndef DRM_FOURCC_STANDALONE
 #include "drm.h"
+#endif
 
 #if defined(__cplusplus)
 extern "C" {

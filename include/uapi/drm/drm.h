@@ -36,23 +36,25 @@
 #ifndef _DRM_H_
 #define _DRM_H_
 
+/**
+ * DRM_BASIC_TYPES_DEFINED section exists in both drm.h and drm_fourcc.h files.
+ * Do not modify the section in one file without updating the other!
+ */
+
+#ifndef DRM_BASIC_TYPES_DEFINED
+#define DRM_BASIC_TYPES_DEFINED
+
 #if defined(__KERNEL__)
 
 #include <linux/types.h>
-#include <asm/ioctl.h>
-typedef unsigned int drm_handle_t;
 
 #elif defined(__linux__)
 
 #include <linux/types.h>
-#include <asm/ioctl.h>
-typedef unsigned int drm_handle_t;
 
-#else /* One of the BSDs */
+#else /* Not Linux */
 
 #include <stdint.h>
-#include <sys/ioccom.h>
-#include <sys/types.h>
 typedef int8_t   __s8;
 typedef uint8_t  __u8;
 typedef int16_t  __s16;
@@ -62,6 +64,25 @@ typedef uint32_t __u32;
 typedef int64_t  __s64;
 typedef uint64_t __u64;
 typedef size_t   __kernel_size_t;
+
+#endif
+
+#endif /* DRM_BASIC_TYPES_DEFINED */
+
+#if defined(__KERNEL__)
+
+#include <asm/ioctl.h>
+typedef unsigned int drm_handle_t;
+
+#elif defined(__linux__)
+
+#include <asm/ioctl.h>
+typedef unsigned int drm_handle_t;
+
+#else /* One of the BSDs */
+
+#include <sys/ioccom.h>
+#include <sys/types.h>
 typedef unsigned long drm_handle_t;
 
 #endif
